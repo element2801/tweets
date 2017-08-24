@@ -19,5 +19,5 @@ http.createServer((req, res) => {
       handler.handle(req, body, res);
     }
   });
-}).listen(3000);
+}).listen(process.env.PORT || 3000);
 
