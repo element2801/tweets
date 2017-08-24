@@ -10,9 +10,14 @@ http.createServer((req, res) => {
     body.push(chunk);
   }).on('end', () => {
     body = Buffer.concat(body).toString();
-    const parsedBody = JSON.parse(body);
-    logger.info(req.method, req.url, parsedBody);
-    handler.handle(req, parsedBody, res);
+    if (body) {
+      const parsedBody = JSON.parse(body);
+      logger.info(req.method, req.url, parsedBody);
+      handler.handle(req, parsedBody, res);
+    } else {
+      logger.info(req.method, req.url);
+      handler.handle(req, body, res);
+    }
   });
 }).listen(3000);
 
